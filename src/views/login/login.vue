@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import LoginForm from "@/components/LoginForm.vue";
+import LoginForm from "@/components/login/LoginForm.vue";
 import loginPhoto from "@/assets/login.jpg";
 
 export default {

@@ -24,13 +24,9 @@ export default {
 
   methods: {
     openLoginForm() {
-      window.name = "parent";
-      const loginWin = window.open(
-        process.env.VUE_APP_LOGIN_API,
-        "loginForm",
-        "width=650,height=450"
-      );
-      loginWin.moveBy(0, 275);
+      localStorage.token = 'kjhgkj4rhbj4hrjbh45j7g54g745hgjh45fj45gf5g7j4g5f7h4g5j745hg7h45f';
+      this.$router.push({name: 'main'})
+
     },
   },
 };
