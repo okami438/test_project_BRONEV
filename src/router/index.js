@@ -4,6 +4,7 @@ import LoginPage from "@/views/login/login.vue";
 import TheMainComponent from "@/views/app/TheMainComponent.vue";
 import SalesComponent from "@/views/sales/Sales.vue";
 import TheRoadsComponent from "@/views/roads/TheRoadsComponent.vue";
+import DriversComponent from "@/views/sales/drivers/DriversComponent/DriversComponent.vue";
 
 Vue.use(VueRouter);
 
@@ -15,9 +16,16 @@ const routes = [
     component: TheMainComponent,
     children: [
       {
-        path: "/sales",
+        path: "sales",
         component: SalesComponent,
         name: "sales",
+        children: [
+          {
+            path: "drivers",
+            component: DriversComponent,
+            name: "drivers",
+          },
+        ]
       },
       {
         path: "/roads",

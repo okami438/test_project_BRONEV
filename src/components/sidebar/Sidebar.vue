@@ -8,37 +8,49 @@
         </div>
         <div v-else class="bank__items-top-logo-collapse">
           <div class="bank__items-top-icon" :style="styleLogoIcon"></div>
-<!--          <span class="material-symbols-outlined">add_a_photo</span>-->
+          <!--          <span class="material-symbols-outlined">add_a_photo</span>-->
         </div>
       </div>
     </div>
-    <div  class="bank__items-middle">
+    <div class="bank__items-middle">
       <div class="bank__items-middle-collapsed" :class="{collapsed: collapsed}">
-          <div class="bank__items-top-icon" :style="styleMenuIcon"></div>
+        <div class="bank__items-top-icon" :style="styleMenuIcon"></div>
       </div>
-<!--      <span class="material-symbols-outlined">add_a_photo</span>-->
+      <!--      <span class="material-symbols-outlined">add_a_photo</span>-->
     </div>
-    <div class="bank__items-bottom">
-      <div v-if="collapsed" class="bank__items-bottom-collapsed">
-        <div v-for="item in 1"  href="/" class="bank__items-sources d-flex align-items-center justify-content-start">
-          <span class="material-symbols-outlined">menu_book</span>
-          <p class="bank__items-bottom-collapsed-text my-0"> Справочник </p>
-          <dropdown/>
-        </div>
-      </div>
-      <div v-else class="bank__items-bottom-collapse">
-        <div v-for="item in 1" href="/" class="bank__items-sources d-flex align-items-center justify-content-start">
-          <span class="material-symbols-outlined">menu_book</span>
-        </div>
-      </div>
+    <div class="bank__items-bottom mx-auto">
+      <ul class="bank__items-bottom-collapsed px-0">
+        <li v-for="item in items" class="bank__items-sources d-flex align-items-center justify-content-start">
+          <div class="d-flex flex-column">
+            <div class="d-flex">
+              <b-icon class="material-symbols-outlined" :icon="item.icon"></b-icon>
+              <template v-if="collapsed">
+                <p class="bank__items-bottom-collapsed-text my-0"> {{ item.name }} </p>
+                <div @click="item.show = !item.show" class="button-release">
+                <span
+                  v-if="item.children"
+                  class="material-symbols-outlined"
+                  :class="{'bank__items-bottom-collapsed-arrow': item.show }"
+              >
+                expand_more
+              </span>
+                </div>
+              </template>
+            </div>
+            <transition name="fade">
+            <dropdown :show="item.show" v-if="item.children" :items="item.children" />
+            </transition>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
 import Dropdown from "@/components/sidebar/Dropdown.vue";
-import logoMenu from "@/assets/logomenu.png"
-import menuBar  from  "@/assets/menu.png"
+import logoMenu from "@/assets/logomenu.png";
+import menuBar from "@/assets/menu.png";
 
 export default {
   name: "Sidebar",
@@ -48,6 +60,7 @@ export default {
       menuBar,
       logoMenu,
       list: false,
+      show: false,
       styleMenuIcon: {
         backgroundImage: `url(${menuBar})`,
         width: "100%",
@@ -61,15 +74,27 @@ export default {
         height: "32px",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
-      }
-    }
+      },
+      items: [
+        {
+          key: 0, show: false, name: "Справочник", icon: "book", children: [
+            { key: 0, name: "Водители", route: "drivers" },
+            { key: 1, name: "Направления", route: "directions" },
+            { key: 2, name: "Конрагенты", route: "contractors" }
+          ]
+        },
+        { key: 0, show: false, name: "Маршруты", icon: "geo-alt" },
+        { key: 0, show: false, name: "Рейсы", icon: "minecart" },
+        { key: 0, show: false, name: "Отчеты", icon: "clipboard-data" }
+      ]
+    };
   },
   props: {
     collapsed: {
       type: Boolean,
       required: false
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -162,11 +187,11 @@ export default {
   position: relative;
 }
 
-.bank__items-bottom {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
+/*.bank__items-bottom {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  height: 100%;*/
+/*}*/
 
 .collapsed .bank__items-bottom {
   align-items: center;
@@ -175,7 +200,6 @@ export default {
 
 
 .bank__items-sources {
-  height: 50px;
   padding-top: 20px;
   text-decoration: none;
 }
@@ -186,19 +210,36 @@ export default {
   cursor: pointer;
 }
 
-.bank__items-bottom-collapsed {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-left: 20px;
-}
-
-
 .bank__items-bottom-collapsed-text {
   display: flex;
   color: grey;
   margin-left: 10px;
 }
 
+
+.material-symbols-outlined {
+  transition: transform .15s;
+}
+
+.material-symbols-outlined.bank__items-bottom-collapsed-arrow {
+  transform: rotate(180deg);
+  transition: transform .15s;
+}
+
+.button-release {
+  display: flex;
+  color: grey;
+  position: relative;
+  top: 1px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .15s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
 
 </style>
