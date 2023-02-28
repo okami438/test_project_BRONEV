@@ -73,7 +73,7 @@ export default {
   color: var(--sidecolorsecond);
   border: none;
   position: relative;
-  top: 4px;
+  top: 2px;
   /*margin-right: 10px;*/
 }
 

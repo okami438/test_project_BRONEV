@@ -39,9 +39,8 @@ export default {
   data() {
     return {
       collapsed: false,
-      // bank_text: false
     }
-  }
+  },
 };
 </script>
 
@@ -58,7 +57,7 @@ export default {
 }
 
 .collapsed {
-  transition: 0.15s linear;
+  transition: 0.15s ease-out;
   width: var(--minsidew);
 
 }

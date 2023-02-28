@@ -70,18 +70,22 @@ export default {
 
 <style scoped>
 .full__menu {
+  margin-top: 10px;
   display: block;
   height: 100%;
 }
 .full__menu-header {
   display: flex;
-  flex-direction: row;
   align-items: center;
   background-color: var(--sidecolorsecond);
-  height: 60px;
+  height: 55px;
+  margin: 0 15px 0 15px;
   padding-left: 15px;
+  box-shadow: 0px 0px 10px 1px rgba(34, 60, 80, 0.2);
+  border-radius: 5px;
 }
 .full__menu-header h2 {
+  align-items: center;
   font-weight: normal;
   font-size: 20px;
 }
